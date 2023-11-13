@@ -191,6 +191,15 @@ class ExtractLocust(object):
         self.context.locusts.add(flow.request.host, flow)
 
 
+    def response(self, flow: flow.Flow) -> None:
+        ctx.log.info('got response')
+        #def response(self, flow: mitmproxy.http.HTTPFlow) -> None:
+        """The full HTTP response has been read."""
+        if flow.response and flow.response.content:
+            ctx.log.info('response is:')
+            ctx.log.info(str(flow.response.content))
+            #open("responses.txt", "a+").write(flow.response.text)
+        
     @command.command("locust.task.clip")
     def task_clip(self, flows: typing.Sequence[flow.Flow]) -> None:
         """Export a flow to the system clipboard as locust task."""
